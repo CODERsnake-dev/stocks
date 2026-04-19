@@ -25,6 +25,10 @@ def init_db():
         conn.commit()
 
 
+# Run at import time so gunicorn initialises the DB too
+init_db()
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -143,6 +147,4 @@ def remove_holding(ticker):
 
 
 if __name__ == "__main__":
-    init_db()
-    # host="0.0.0.0" makes it accessible from your phone on the same WiFi
     app.run(host="0.0.0.0", port=5000, debug=False)
